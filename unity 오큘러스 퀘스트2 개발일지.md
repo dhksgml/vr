@@ -28,3 +28,25 @@ https://docs.unity3d.com/kr/2018.4/Manual/OculusControllers.html
 
 OVRInput.Get()을 통해서 입력을 받는다는 것을 알게 되었다. OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft)을 이용했고 왼쪽 컨트롤러로 회전을 시킬 수 있게 되었다.
 
+
+
+### 텔레포트
+
+유튜브 ExpanseVR 참고
+
+https://www.youtube.com/watch?v=10xu4exNstQ
+
+텔레포트를 하게 되면 바닥을 뚫고 아래로 떨어지는 상황이 발생합니다.
+
+unity 물리엔진이 60fps로 동작하는데, 오큘러스나 다른 기기들은 새로고침 빈도가 다르기 때문이다.
+
+Project Settings -> Time -> Fixed Timestep을 변경
+
+그리고, LocomotionTeleport.cs 스크립트를 변경해야 한다.
+
+```c#
+character.enabled = false;
+character.enabled = true;
+```
+
+콜라이더 활성화/비활성화를 명시해야 바닥으로 떨어지는 현상을 예방할 수 있다.
