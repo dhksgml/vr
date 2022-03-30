@@ -50,3 +50,78 @@ character.enabled = true;
 ```
 
 콜라이더 활성화/비활성화를 명시해야 바닥으로 떨어지는 현상을 예방할 수 있다.
+
+
+
+### 회전
+
+OVR Player Controller 스크립트의 Rotate Around Guardian Center을 true로 변경하면 플레이어 시점 회전이 현재 위치에서 고개만 돌리는 것 처럼 된다.
+
+### 레이캐스트
+
+변경 전
+
+```c#
+public class raycasting : MonoBehaviour
+{
+    private Ray ray;
+    private RaycastHit hit;
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red);
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger))
+        {
+            if(Physics.Raycast(transform.position, transform.forward, out hit, 1000f))
+            {
+                hit.transform.GetComponent<MeshRenderer>().material.color = Color.red;
+                
+            }
+        }    
+    }
+}
+
+```
+
+변경 후
+
+```c#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class raycasting : MonoBehaviour
+{
+    public GameObject ray_point;
+    private Ray ray;
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
+        {
+            Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red);
+            FireRay();
+        }    
+    }
+
+    void FireRay()
+    {
+        Ray ray = new Ray(ray_point.transform.position, ray_point.transform.forward);
+        Debug.DrawRay(ray_point.transform.position, ray_point.transform.forward, Color.red);
+        RaycastHit hitData;
+        if (Physics.Raycast(ray, out hitData))
+        {
+            Debug.Log(hitData.transform.gameObject.name);
+        }
+    }       
+}
+```
+
+전에 코드는 한쪽 컨트롤러를 내려놓았을 때 작동을 안 하는 현상이 발견되었다. 매핑 방식에 차이가 있어서 그런 것 같았다.
+
+아래 사이트를 참고해서 문제를 해결할 수 있었다.
+
+https://syaring92.tistory.com/2
