@@ -131,3 +131,30 @@ https://syaring92.tistory.com/2
 grabber 스크립트와 grabbable 스크립트를 이용하여 물체를 잡을 수 있다.
 
 손에는 grabber 스크립트를 적용하고, 잡을 수 있는 물체에는 grabbable 스크립트를 적용한다.
+
+> 멀리 있는 물체를 손으로 가져오는 방법
+
+멀리 있는 물체를 레이캐스트를 통해 손으로 끌고 올 수 있다.
+
+DistanceGrabHandLeft와 DistanceGrabHandRight 프리팹를 이용하는 방법이다.
+
+이 프리팹에는 Distance Grabber 스크립트가 있는데, Grip Transform을 손 위치로 지정하고,
+
+Player에는 OVRPlayerController을 넣어준다.
+
+crosshair을 지정하지 않은 경우 끌어올 수 없다. 만약 crosshair을 지정하지 않고 이 기능을 사용하고 싶다면, spherecollider을 하나 만들고 Distance Grabber 스크립트에 있는 Use Spherecast를 체크해야 한다.
+
+
+
+경고 발생
+
+1.
+
+m_parentHeldObject incompatible with DistanceGrabber. Setting to false.
+UnityEngine.Debug:LogError(Object)
+OculusSampleFramework.DistanceGrabber:Start() (at Assets/Oculus/SampleFramework/Core/DistanceGrab/Scripts/DistanceGrabber.cs:95)
+
+2.
+
+NullReferenceException: Object reference not set to an instance of an object
+CharacterCameraConstraint.OnEnable () (at Assets/Oculus/SampleFramework/Core/Locomotion/Scripts/CharacterCameraConstraint.cs:72)
