@@ -125,3 +125,9 @@ public class raycasting : MonoBehaviour
 아래 사이트를 참고해서 문제를 해결할 수 있었다.
 
 https://syaring92.tistory.com/2
+
+### 물체 잡기
+
+grabber 스크립트와 grabbable 스크립트를 이용하여 물체를 잡을 수 있다.
+
+손에는 grabber 스크립트를 적용하고, 잡을 수 있는 물체에는 grabbable 스크립트를 적용한다.
