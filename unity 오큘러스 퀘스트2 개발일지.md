@@ -28,6 +28,18 @@ https://docs.unity3d.com/kr/2018.4/Manual/OculusControllers.html
 
 OVRInput.Get()을 통해서 입력을 받는다는 것을 알게 되었다. OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft)을 이용했고 왼쪽 컨트롤러로 회전을 시킬 수 있게 되었다.
 
++ 2022-04-03
+
+텔레포트 기능을 사용할 때, 왼쪽 컨트롤러와 오른쪽 컨트롤러를 가까이 붙이면 텔레포트를 할 위치와 레이저 포인터가 사라지는 현상을 발견했다. 
+
+https://ojui.tistory.com/12
+
+위 사이트를 참고하여 문제를 해결할 수 있었다.
+
+예를 들어 왼쪽 컨트롤러를 내려놓고 오른쪽 컨트롤러를 들면 왼쪽 컨트롤러에 있는 기능을 오른쪽 컨트롤러로 수행할 수 있는데, 이런 매핑 때문에 문제가 발생하는 것 같았다.
+
+그래서 TeleportInputHandlerTouch.cs 스크립트 222번째 줄에 보면 ```OVRInput.GetDown(teleportButton)``` 부분을 ```OVRInput.GetDown(teleportButton, OVRInput.Controller.LTouch)```로 변경하여 왼쪽 컨트롤러를 오른쪽 컨트롤러 가까이 가져가도 텔레포트할 위치와 경로가 사라지지 않게 되었다.
+
 
 
 ### 텔레포트
@@ -154,7 +166,12 @@ m_parentHeldObject incompatible with DistanceGrabber. Setting to false.
 UnityEngine.Debug:LogError(Object)
 OculusSampleFramework.DistanceGrabber:Start() (at Assets/Oculus/SampleFramework/Core/DistanceGrab/Scripts/DistanceGrabber.cs:95)
 
+- Distance Grabber 스크립트의 Parent Held Object 옵션을 체크해제 하면 사라진다.
+
 2.
 
 NullReferenceException: Object reference not set to an instance of an object
 CharacterCameraConstraint.OnEnable () (at Assets/Oculus/SampleFramework/Core/Locomotion/Scripts/CharacterCameraConstraint.cs:72)
+
+- CharacterCameraConstraint 스크립트를 컴포넌트에서 제거한다.
+
