@@ -21,7 +21,8 @@ public class client : MonoBehaviour
 
 	private bool isReady = false;
 	#endregion
-	public Transform[] target_Obj = new Transform[3];
+	public GameObject[] body = new GameObject[3];
+	//public Transform[] target_Obj = new Transform[3];
 	public Transform[] original_Obj = new Transform[3];
 	public int array_counter = 0;
 
@@ -30,6 +31,10 @@ public class client : MonoBehaviour
 	// Use this for initialization 	
 	void Start()
 	{
+		for(int i = 0; i < 3; i++)
+        {
+			body[i] = Instantiate(body[i]);
+        }
 		ConnectToTcpServer();
 		if(isReady)
 			StartCoroutine(CountTime(0.03f));
@@ -46,7 +51,8 @@ public class client : MonoBehaviour
 		//result = serverMessage.Split(new char[] { ' ' });
 		for (int a = 0; a < 3; a++)
         {
-			target_Obj[a].SetPositionAndRotation(pos_obj[a], Quaternion.Euler(rot_obj[a]));
+			//target_Obj[a].SetPositionAndRotation(pos_obj[a], Quaternion.Euler(rot_obj[a]));
+			body[a].transform.SetPositionAndRotation(pos_obj[a], Quaternion.Euler(rot_obj[a]));
 
         }
 		//if (Input.GetKeyDown(KeyCode.Space))
@@ -78,7 +84,7 @@ public class client : MonoBehaviour
 	{
 		try
 		{
-			socketConnection = new TcpClient("127.0.0.1", 4800);
+			socketConnection = new TcpClient("127.0.0.1", 4800); //192.168.0.9
 			Byte[] bytes = new Byte[1024];
 			while (true)
 			{
